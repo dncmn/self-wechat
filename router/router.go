@@ -9,10 +9,9 @@ import (
 )
 
 func Router(r *gin.Engine) {
-	//r.StaticFS("/compoments/runtime/qrcode", http.Dir(qrcode.GetQrCodeFullPath()))
 	wxServerCheck := r.Group("/api/v2")
 	{
-		wxServerCheck.GET("/", handler.HandlerSignatureHandler)
+		wxServerCheck.GET("/check", handler.HandlerSignatureHandler)
 
 	}
 

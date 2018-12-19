@@ -19,7 +19,6 @@ import (
 	"self-wechat/constants"
 	"self-wechat/constants/redisKey"
 	"self-wechat/utils"
-	"self-wechat/utils/async"
 	"time"
 )
 
@@ -32,9 +31,6 @@ var (
 )
 
 func init() {
-	go async.Do(func() {
-		initService()
-	})
 	ep = *mp.NewEndpoint(config.Config.Wechat.AppID, config.Config.Wechat.Secret)
 	oath2Client.Endpoint = &ep
 
