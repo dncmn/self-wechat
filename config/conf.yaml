@@ -1,0 +1,108 @@
+development:
+  mysql:
+    host: 127.0.0.1:3306
+    dbname: game
+    username: root
+    password: password
+    maxOpenConns: 1000
+    maxIdleConns: 200
+    connMaxLifetime: 5
+  env:
+    env: development-env
+  cfg:
+    token: aed743c9-a398-4f00-9f54-c2f0599be29e
+    port: 8080
+    timeZone: Asia/Shanghai
+    timeModelStr: 2006-01-02 15:04:05
+  redis:
+    host: 127.0.0.1:6379
+    password:
+    db: 0
+  pgsql:
+    host: 127.0.0.1
+    port: 5432
+    dbname: self_game
+    username: postgres
+    password: 123456
+    maxIdleConns: 20
+    maxOpenConns: 100
+    connMaxLifetime: 5
+  app:
+    runtimeRootPath: /tmp/code
+    qrCodeSavePath: /tmp/code
+    prefixUrl: dncmn
+  wechat:
+    appid: wx66d4b9cfdba3516a
+    secret: 92ae70edab1f626e1b37b435fb1190c7
+test:
+  mysql:
+    host: 127.0.0.1:3306
+    dbname: game
+    username: root
+    password: password
+    maxOpenConns: 1000
+    maxIdleConns: 200
+    connMaxLifetime: 5
+  env:
+    env: test-env
+  cfg:
+    token: aed743c9-a398-4f00-9f54-c2f0599be29e
+    port: 8080
+    timeZone: Asia/Shanghai
+    timeModelStr: 2006-01-02 15:04:05
+  redis:
+    host: 127.0.0.1:6379
+    password:
+    db: 0
+  pgsql:
+    host: 127.0.0.1
+    port: 5432
+    dbname: self_game
+    username: postgres
+    password: 123456
+    maxIdleConns: 20
+    maxOpenConns: 100
+    connMaxLifetime: 5
+  app:
+    runtimeRootPath: compoments/runtime/
+    qrCodeSavePath: qrcode/
+    prefixUrl: http://127.0.0.1:8080/
+  wechat:
+    appid: wx66d4b9cfdba3516a
+    secret: 92ae70edab1f626e1b37b435fb1190c7
+production:
+  mysql:
+    host: 127.0.0.1:8980
+    dbname: self-wechat
+    username: mn01
+    password: 123456
+    maxOpenConns: 1000
+    maxIdleConns: 200
+    connMaxLifetime: 5
+  env:
+    env: production-env
+  cfg:
+    token: aed743c9-a398-4f00-9f54-c2f0599be29f
+    port: 8080
+    timeZone: America/Los_Angeles
+    timeModelStr: 2006-01-02 15:04:05
+  redis:
+    host: 127.0.0.1:6379
+    password:
+    db: 0
+  pgsql:
+    host: 127.0.0.1
+    port: 5432
+    dbname: self_game
+    username: root
+    password: 123456
+    maxIdleConns: 20
+    maxOpenConns: 100
+    connMaxLifetime: 5
+  app:
+    runtimeRootPath: /tmp/code
+    qrCodeSavePath: /tmp/code
+    prefixUrl: dncmn
+  wechat:
+    appid: wx66d4b9cfdba3516a
+    secret: 92ae70edab1f626e1b37b435fb1190c7
