@@ -6,9 +6,9 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"log"
-	"self-game/model"
-	"self-game/utils/logging"
 	"self-wechat/config"
+	"self-wechat/model"
+	"self-wechat/utils/logging"
 )
 
 var (
