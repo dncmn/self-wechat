@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"net/http"
 	"self-wechat/constants/gameCode"
 	"self-wechat/service"
 	"self-wechat/utils"
@@ -243,4 +244,34 @@ func HandMessagesHandler(c *gin.Context) {
 	}
 	c.Data(200, "", []byte(xmlStr))
 	return
+}
+
+func HandlerSignatureHandler(c *gin.Context) {
+	var (
+		signature string
+		echostr   string
+		timestamp string
+		nonce     string
+		err       error
+		cfgToken  string
+	)
+
+	if signature, echostr, timestamp, nonce, err = service.GetSignatrueParams(c); err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	logger.Infof("signature=%s,echostr=%s,nonce=%s,nonce=%s,cfgToken=%s",
+		signature, echostr, timestamp, nonce, cfgToken)
+	ok := service.WechatCheckServer(timestamp, nonce, signature)
+	if ok {
+
+
+		c.Data(200, "", []byte(echostr))
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"ok": false,
+	})
 }

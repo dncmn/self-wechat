@@ -3,9 +3,7 @@ package compoments
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
-	"log"
 	"self-wechat/config"
-	"self-wechat/model"
 	// 导入postgres驱动
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -44,20 +42,7 @@ func init() {
 	//globlDbPg.SetLogger(logging.GetGormLogger())
 }
 func MigragePG() {
-	var err error
 	logs.Info("begin create table")
-	if err = globlDbPg.AutoMigrate(&model.LogLogin{}).Error; err != nil {
-		log.Fatal(err)
-	}
-
-	if err = globlDbPg.AutoMigrate(&model.User{}).Error; err != nil {
-		log.Fatal(err)
-	}
-
-	if err = globlDbPg.AutoMigrate(&model.UserCourse{}).Error; err != nil {
-		log.Fatal(err)
-	}
-
 	logs.Info("end create table")
 }
 

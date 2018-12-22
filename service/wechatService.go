@@ -1,12 +1,17 @@
 package service
 
 import (
+	"crypto/sha1"
 	"crypto/tls"
+	"encoding/hex"
 	"encoding/json"
+	"github.com/gin-gonic/gin"
 	"gopkg.in/chanxuehong/wechat.v2/mp/jssdk"
 	"gopkg.in/chanxuehong/wechat.v2/mp/message/template"
 	"gopkg.in/chanxuehong/wechat.v2/mp/user"
+	"sort"
 	"strconv"
+	"strings"
 
 	"gopkg.in/chanxuehong/wechat.v2/mp/core"
 	"gopkg.in/chanxuehong/wechat.v2/mp/media"
@@ -20,7 +25,58 @@ import (
 	"self-wechat/constants/redisKey"
 	"self-wechat/utils"
 	"time"
+	"errors"
 )
+func GetSignatrueParams(c *gin.Context) (signature, echostr string, timestamp, nonce string, err error) {
+	if signature = c.Query("signature"); strings.TrimSpace(signature) == "" {
+		err = errors.New("params error")
+		logger.Error(err)
+		return
+	}
+	if echostr = c.Query("echostr"); strings.TrimSpace(signature) == "" {
+		err = errors.New("params error")
+		logger.Error(err)
+		return
+	}
+
+	if timestamp = c.Query("timestamp"); strings.TrimSpace(timestamp) == "" {
+		err = errors.New("params error")
+		logger.Error(err)
+		return
+	}
+	if nonce = c.Query("nonce"); strings.TrimSpace(nonce) == "" {
+		err = errors.New("params error")
+		logger.Error(err)
+		return
+	}
+	return
+}
+
+func Sha1(data string) string {
+	sha1 := sha1.New()
+	sha1.Write([]byte(data))
+	return hex.EncodeToString(sha1.Sum([]byte("")))
+}
+
+// 验证
+func WechatCheckServer(timestamp, nonce, signature string) (success bool) {
+	cfgToken := "helloWorld"
+	list := []string{
+		cfgToken, timestamp, nonce,
+	}
+	sort.Strings(list)
+	totalStr := strings.Join(list, "")
+
+	result := Sha1(totalStr)
+	logger.Infof("totalStr=%s,md5Str=%s,signature=%s", totalStr, result, signature)
+
+	if result == signature {
+		return true
+	}
+	return
+}
+
+
 
 type ReceiveMsgReq struct {
 	URL          string `json:"URL"`

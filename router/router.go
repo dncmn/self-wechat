@@ -11,8 +11,8 @@ import (
 func Router(r *gin.Engine) {
 	wxServerCheck := r.Group("/api/v2")
 	{
-		wxServerCheck.GET("/check", handler.HandlerSignatureHandler)
-		wxServerCheck.POST("/check", handler.HandMessagesHandler)
+		wxServerCheck.GET("/check", handler.HandlerSignatureHandler) // 服务器配置信息验证
+		wxServerCheck.POST("/check", handler.HandMessagesHandler) // 接收各种消息
 
 	}
 

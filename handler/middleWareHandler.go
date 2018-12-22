@@ -7,8 +7,6 @@ import (
 	"net/http"
 	"self-wechat/config"
 	"self-wechat/constants/gameCode"
-	"self-wechat/service"
-	"self-wechat/utils"
 	"self-wechat/utils/logging"
 	"self-wechat/utils/vo"
 )
@@ -22,36 +20,6 @@ var (
 	ContextKeyUserToken = "userToken"
 )
 
-// 验证userToken
-func VerifyUserToken(c *gin.Context) {
-	var (
-		userToken string
-		uid       string
-		err       error
-		retData   = vo.NewData()
-	)
-
-	if userToken = c.Request.Header.Get(UserToken); utils.IsStringEmpty(userToken) {
-		retData.Code = gameCode.RequestTokenError
-		c.JSON(http.StatusBadRequest, retData)
-		logger.Error("token error")
-		c.Abort()
-		return
-	}
-
-	uid, err = service.GetUIDByUserToken(userToken)
-	if err != nil {
-		retData.Code = gameCode.RequestTokenError
-		c.JSON(http.StatusBadRequest, retData)
-		logger.Error("token error")
-		c.Abort()
-		return
-	}
-	logger.Infof("set uid %v", uid)
-	c.Set(ContextKeyAppUID, uid)
-	c.Set(ContextKeyUserToken, userToken)
-	c.Next()
-}
 
 // 验证token
 func VerifyToken(c *gin.Context) {

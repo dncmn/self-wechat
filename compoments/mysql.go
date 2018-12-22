@@ -5,9 +5,7 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"log"
 	"self-wechat/config"
-	"self-wechat/model"
 	"self-wechat/utils/logging"
 )
 
@@ -53,15 +51,6 @@ func GetDB() (db *gorm.DB) {
 }
 
 func Migrage() {
-	var err error
 	logs.Info("begin create table")
-	if err = globDb.AutoMigrate(&model.LogLogin{}).Error; err != nil {
-		log.Fatal(err)
-	}
-
-	if err = globDb.AutoMigrate(&model.User{}).Error; err != nil {
-		log.Fatal(err)
-	}
-
 	logs.Info("end create table")
 }
