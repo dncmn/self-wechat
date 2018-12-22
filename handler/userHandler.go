@@ -180,6 +180,7 @@ func HandlerSignatureHandler(c *gin.Context) {
 		timestamp string
 		nonce     string
 		err       error
+		cfgToken  string
 	)
 
 	if signature, echostr, timestamp, nonce, err = service.GetSignatrueParams(c); err != nil {
@@ -187,12 +188,19 @@ func HandlerSignatureHandler(c *gin.Context) {
 		return
 	}
 
-	fmt.Println(signature, echostr, timestamp, nonce)
+	logger.Infof("signature=%s,echostr=%s,nonce=%s,nonce=%s,cfgToken=%s",
+		signature, echostr, timestamp, nonce, cfgToken)
+	ok := service.WechatCheckServer(timestamp, nonce, signature)
+	if ok {
+
+
+c.Data(200, "", []byte(echostr))
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"ok": true,
+		"ok": false,
 	})
-
 }
 
 func GetUserNameHandler(c *gin.Context) {

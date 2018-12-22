@@ -1,6 +1,8 @@
 package service
 
 import (
+	"crypto/sha1"
+	"encoding/hex"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"self-wechat/config"
@@ -9,6 +11,7 @@ import (
 	"self-wechat/model"
 	"self-wechat/utils"
 	"self-wechat/utils/taobaoIP"
+	"sort"
 	"strings"
 )
 
@@ -72,6 +75,30 @@ func GetSignatrueParams(c *gin.Context) (signature, echostr string, timestamp, n
 		err = errors.New("params error")
 		logger.Error(err)
 		return
+	}
+	return
+}
+
+func Sha1(data string) string {
+	sha1 := sha1.New()
+	sha1.Write([]byte(data))
+	return hex.EncodeToString(sha1.Sum([]byte("")))
+}
+
+// 验证
+func WechatCheckServer(timestamp, nonce, signature string) (success bool) {
+	cfgToken := "helloWorld"
+	list := []string{
+		cfgToken, timestamp, nonce,
+	}
+	sort.Strings(list)
+	totalStr := strings.Join(list, "")
+
+	result := Sha1(totalStr)
+	logger.Infof("totalStr=%s,md5Str=%s,signature=%s", totalStr, result, signature)
+
+	if result == signature {
+		return true
 	}
 	return
 }
