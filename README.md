@@ -1,6 +1,9 @@
-迷你型的demo
+微信用过的接口总结
 
-用到的知识点
-    1、gin+mysql
-    2、完善的log
-    3、统一解析post请求体和统一的返回体封装
+内容列表:
+    1、服务器验证功能
+    2、code换access_token
+    3、mediaID下载语音和图片
+    4、发送模板消息
+    5、根据openid获取用户信息
+    6、前端获取微信签名(jsconfig)
